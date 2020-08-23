@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 function pacman_install() {
     set +e
     IFS=' ' PACKAGES=($1)
