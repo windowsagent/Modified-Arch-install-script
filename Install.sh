@@ -1,23 +1,4 @@
-function pacman_install() {
-    set +e
-    IFS=' ' PACKAGES=($1)
-    for VARIABLE in {1..5}
-    do
-        arch-chroot /mnt pacman -Syu --noconfirm --needed ${PACKAGES[@]}
-        if [ $? == 0 ]; then
-            break
-        else
-            sleep 10
-        fi
-    done
-    set -e
-}
-function create_user_useradd() {
-    USER_NAME=$1
-    USER_PASSWORD=$2
-    arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash $USER_NAME
-    printf "$USER_PASSWORD\n$USER_PASSWORD" | arch-chroot /mnt passwd $USER_NAME
-}
+#!/usr/bin/env bash
 
 timedatectl set-ntp true
 sgdisk --zap-all /dev/sda
@@ -69,3 +50,23 @@ echo "You can now proceed to reboot your system :3"
 echo "*computer* Huh, this was a whole journey!"
 echo " "
 ### This code is a mess, I know.
+function pacman_install() {
+    set +e
+    IFS=' ' PACKAGES=($1)
+    for VARIABLE in {1..5}
+    do
+        arch-chroot /mnt pacman -Syu --noconfirm --needed ${PACKAGES[@]}
+        if [ $? == 0 ]; then
+            break
+        else
+            sleep 10
+        fi
+    done
+    set -e
+}
+function create_user_useradd() {
+    USER_NAME=$1
+    USER_PASSWORD=$2
+    arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash $USER_NAME
+    printf "$USER_PASSWORD\n$USER_PASSWORD" | arch-chroot /mnt passwd $USER_NAME
+}
