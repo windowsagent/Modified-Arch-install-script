@@ -1,22 +1,41 @@
 #!/usr/bin/env bash
+function pacman_install() {
+    set +e
+    IFS=' ' PACKAGES=($1)
+    for VARIABLE in {1..5}
+    do
+        arch-chroot /mnt pacman -Syu --noconfirm --needed ${PACKAGES[@]}
+        if [ $? == 0 ]; then
+            break
+        else
+            sleep 10
+        fi
+    done
+    set -e
+}
+function create_user_useradd() {
+    USER_NAME=$1
+    USER_PASSWORD=$2
+    arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash $USER_NAME
+    printf "$USER_PASSWORD\n$USER_PASSWORD" | arch-chroot /mnt passwd $USER_NAME
+}
 
 timedatectl set-ntp true
 sgdisk --zap-all /dev/sda
 wipefs -a /dev/sda
-parted -s /dev/sda mklabel msdos mkpart primary ext4 4MiB 512MiB mkpart primary $FILE_SYSTEM_TYPE 512MiB 100% set 1 boot on
+mklabel msdos mkpart primary ext4 4MiB 512MiB mkpart primary $FILE_SYSTEM_TYPE 512MiB 100% set 1 boot on
 wipefs -a /dev/sda2
 wipefs -a /dev/sda1
 mkfs.ext4 -L boot /dev/sda1
 mkfs.ext4 -L root /dev/sda2
 mount /dev/sda2 /mnt
-curl "https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist" >> mirrorlist
-cp mirrorlist /etc/pacman.d/mirrorlist
+curl "https://www.archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4" >> /etc/pacman.d/mirrorlist
 pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt ln -s -f /usr/share/zoneinfo/USA/Eastern /etc/localtime
 arch-chroot /mnt hwclock --systohc
-sed -i "en_GB.UTF-8 UTF-8" /etc/locale.gen
-sed -i "en_GB.UTF-8 UTF-8" /etc/etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
 locale-gen
 arch-chroot /mnt locale-gen
 echo Insert the host name, please.
@@ -42,32 +61,27 @@ arch-chroot /mnt systemctl set-default graphical.target
 pacman_install "xfce4 xfce4-goodies lightdm lightdm-gtk-greeter xorg-server"
 arch-chroot /mnt systemctl enable lightdm.service
 arch-chroot /mnt sed -i 's/%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+pacman_install "git base-devel"
 pacman_install "git"
-arch-chroot /mnt bash -c "echo -e \"2006\n2006\n2006\n2006\n\" | su windowsagent -c \"cd /home/windowsagent && git clone https://aur.archlinux.org/$AUR.git && (cd $AUR && makepkg -si --noconfirm) && rm -rf $AUR\""
+# Run a script inside a chroot environment
+
+
+cat <<EOF > /mnt/root/yayinstall.sh
+git clone https://aur.archlinux.org/yay.git /home/windowsagent/
+chmod 777 /home/windowsagent/
+cd /home/windowsagent/yay/
+makepkg -si
+rm -rf /home/windowsagent/yay/
+exit # to leave the chroot
+EOF
+
+arch-chroot /mnt /root/yayinstall.sh
+
+# Exit out of the chroot enviroment
 echo " "
 echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
 echo " "
 echo "You can now proceed to reboot your system :3"
 echo "*computer* Huh, this was a whole journey!"
 echo " "
-### This code is a mess, I know.
-function pacman_install() {
-    set +e
-    IFS=' ' PACKAGES=($1)
-    for VARIABLE in {1..5}
-    do
-        arch-chroot /mnt pacman -Syu --noconfirm --needed ${PACKAGES[@]}
-        if [ $? == 0 ]; then
-            break
-        else
-            sleep 10
-        fi
-    done
-    set -e
-}
-function create_user_useradd() {
-    USER_NAME=$1
-    USER_PASSWORD=$2
-    arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash $USER_NAME
-    printf "$USER_PASSWORD\n$USER_PASSWORD" | arch-chroot /mnt passwd $USER_NAME
-}
+# This code is a mess, I know.
