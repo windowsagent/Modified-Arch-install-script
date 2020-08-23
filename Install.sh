@@ -3,7 +3,7 @@
 timedatectl set-ntp true
 sgdisk --zap-all /dev/sda
 wipefs -a /dev/sda
-mklabel msdos mkpart primary ext4 4MiB 512MiB mkpart primary $FILE_SYSTEM_TYPE 512MiB 100% set 1 boot on
+parted -s /dev/sda mklabel msdos mkpart primary ext4 4MiB 512MiB mkpart primary $FILE_SYSTEM_TYPE 512MiB 100% set 1 boot on
 wipefs -a /dev/sda2
 wipefs -a /dev/sda1
 mkfs.ext4 -L boot /dev/sda1
