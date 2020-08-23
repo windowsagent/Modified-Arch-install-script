@@ -21,15 +21,8 @@ function create_user_useradd() {
 }
 
 timedatectl set-ntp true
-sgdisk --zap-all /dev/sda
-wipefs -a /dev/sda
-mklabel msdos mkpart primary ext4 4MiB 512MiB mkpart primary $FILE_SYSTEM_TYPE 512MiB 100% set 1 boot on
-wipefs -a /dev/sda2
-wipefs -a /dev/sda1
-mkfs.ext4 -L boot /dev/sda1
-mkfs.ext4 -L root /dev/sda2
-mount /dev/sda2 /mnt
-curl "https://www.archlinux.org/mirrorlist/?country=US&protocol=http&protocol=https&ip_version=4" >> /etc/pacman.d/mirrorlist
+curl "https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist" >> mirrorlist
+cp mirrorlist /etc/pacman.d/mirrorlist
 pacstrap /mnt base linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt ln -s -f /usr/share/zoneinfo/USA/Eastern /etc/localtime
