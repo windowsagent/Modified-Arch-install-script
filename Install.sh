@@ -40,7 +40,7 @@ echo Welcome to the world of Arch linux, $HOSTNAME!
 echo $HOSTNAME > /mnt/etc/hostname
 pacman_install "networkmanager"
 arch-chroot /mnt systemctl enable NetworkManager.service
-create_user "windowsagent" "2006"
+create_user_useradd "windowsagent" "2006"
 pacman_install "sudo"
 arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
 pacman_install "xdg-user-dirs"
