@@ -27,6 +27,7 @@ arch-chroot /mnt pacman -S --noconfirm --needed sudo
 arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
 arch-chroot /mnt pacman -S --noconfirm --needed grub
 arch-chroot /mnt grub-install --target=i386-pc --recheck /dev/sda
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 arch-chroot /mnt systemctl set-default graphical.target
 arch-chroot /mnt pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm lightdm-gtk-greeter xorg-server
 arch-chroot /mnt systemctl enable lightdm.service
