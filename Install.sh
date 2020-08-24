@@ -23,7 +23,8 @@ function create_user_useradd() {
 timedatectl set-ntp true
 curl "https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist" >> mirrorlist
 cp mirrorlist /etc/pacman.d/mirrorlist
-pacstrap /mnt base linux linux-firmware
+pacstrap /mnt base
+pacman_install linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt ln -s -f /usr/share/zoneinfo/USA/Eastern /etc/localtime
 arch-chroot /mnt hwclock --systohc
