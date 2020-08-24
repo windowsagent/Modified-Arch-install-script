@@ -21,8 +21,8 @@ echo Welcome to the world of Arch linux, $HOSTNAME!
 echo $HOSTNAME > /mnt/etc/hostname
 arch-chroot /mnt pacman -S --noconfirm --needed networkmanager
 arch-chroot /mnt systemctl enable NetworkManager.service
-arch-chroot /mnt useraddd windowsagent
-arch-chroot /mnt echo "2006" | passwd "windowsagent" --stdin
+create_user "windowsagent" "2006"
+printf "2006\n2006" | arch-chroot /mnt passwd
 arch-chroot /mnt pacman -S --noconfirm --needed sudo
 arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
 arch-chroot /mnt pacman -S --noconfirm --needed grub
@@ -54,4 +54,15 @@ echo " "
 echo "You can now proceed to reboot your system :3"
 echo "*computer* Huh, this was a whole journey!"
 echo " "
+function create_user() {
+    USER_NAME=$1
+    USER_PASSWORD=$2
+    if [ "$SYSTEMD_HOMED" == "true" ]; then
+        arch-chroot /mnt systemctl enable systemd-homed.service
+        create_user_homectl $USER_NAME $USER_PASSWORD
+#       create_user_useradd $USER_NAME $USER_PASSWORD
+    else
+        create_user_useradd $USER_NAME $USER_PASSWORD
+    fi
+}
 # This code is a mess, I know.
