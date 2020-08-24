@@ -2,6 +2,7 @@
 mkfs.ext4 /dev/sda2
 mkswap /dev/sda3
 swapon /dev/sda3
+mount /dev/sda2
 timedatectl set-ntp true
 curl "https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist" >> mirrorlist
 cp mirrorlist /etc/pacman.d/mirrorlist
