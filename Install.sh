@@ -19,7 +19,9 @@ function create_user_useradd() {
     arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash $USER_NAME
     printf "$USER_PASSWORD\n$USER_PASSWORD" | arch-chroot /mnt passwd $USER_NAME
 }
-
+mkfs.ext4 /dev/sda2
+mkswap /dev/sda3
+swapon /dev/sda3
 timedatectl set-ntp true
 curl "https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist" >> mirrorlist
 cp mirrorlist /etc/pacman.d/mirrorlist
