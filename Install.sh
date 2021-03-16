@@ -1,9 +1,3 @@
-#!/usr/bin/env bash
-mkfs.fat -F 32 /dev/sda1
-mkfs.ext4 /dev/sda2
-mkswap /dev/sda3
-swapon /dev/sda3
-mount /dev/sda2 /mnt
 mkdir /mnt/boot
 timedatectl set-ntp true
 basestrap /mnt base base-devel openrc
@@ -27,7 +21,6 @@ artools-chroot /mnt pacman -S dhcpcd
 useradd -m windowsagent
 artools-chroot /mnt pacman -S --noconfirm --needed sudo
 artools-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
-artools-chroot /mnt pacman -S nvidia
 # Run a script inside a chroot environment
 
 
