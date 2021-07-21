@@ -17,14 +17,14 @@ echo Insert the host name, please.
 read HOSTNAME
 echo Welcome to the world of Arch linux, $HOSTNAME!
 echo $HOSTNAME > /mnt/etc/hostname
-arch-chroot /mnt pacman -S --noconfirm --needed networkmanager
+arch-chroot /mnt pacman -S --noconfirm --needed networkmanager curl
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
 arch-chroot /mnt useradd -m windowsagent
 arch-chroot /mnt echo -e "2006\n2006" | passwd windowsagent
 arch-chroot /mnt echo -e "2006\n2006" | passwd root
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git
-arch-chroot /mnt echo 'windowsagent ALL=(ALL)' >> /etc/sudoers
+curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 # Run a script inside a chroot environment
 
 
