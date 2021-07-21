@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mkdir /mnt/boot
 timedatectl set-ntp true
 reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
