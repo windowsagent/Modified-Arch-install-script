@@ -2,7 +2,6 @@
 
 mkdir /mnt/boot
 timedatectl set-ntp true
-reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 pacstrap /mnt base base-devel
 pacstrap /mnt linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
