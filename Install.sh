@@ -25,7 +25,7 @@ arch-chroot /mnt useradd -m windowsagent
 arch-chroot /mnt echo -e "2006\n2006" | passwd windowsagent
 arch-chroot /mnt echo -e "2006\n2006" | passwd root
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git
-arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
+arch-chroot /mnt echo 'windowsagent ALL=(ALL)' >> /etc/sudoers
 # Run a script inside a chroot environment
 
 
@@ -43,7 +43,7 @@ cd /home/windowsagent/
 
 wget https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/configs.zip
 unzip configs.zip
-pacman -S --noconfirm --needed xfce4 xfce4-goodies sddm
+pacman -S --noconfirm --needed xfce4 xfce4-goodies sddm xorg
 systemctl enable sddm.service
 
 exit # to leave the chroot
