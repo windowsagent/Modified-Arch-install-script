@@ -20,7 +20,7 @@ echo Welcome to the world of Arch linux, $HOSTNAME!
 echo $HOSTNAME > /mnt/etc/hostname
 arch-chroot /mnt pacman -S --noconfirm --needed networkmanager
 arch-chroot /mnt systemctl enable NetworkManager.service
-arch-chroot /mnt pacman -S dhcpcd
+arch-chroot /mnt pacman -S --noconfirm dhcpcd
 useradd -m windowsagent
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git
 arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
