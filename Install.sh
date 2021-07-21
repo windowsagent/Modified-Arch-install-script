@@ -21,7 +21,8 @@ echo $HOSTNAME > /mnt/etc/hostname
 arch-chroot /mnt pacman -S --noconfirm --needed networkmanager
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
-useradd -m windowsagent
+arch-chroot /mnt useradd -m windowsagent
+arch-chroot /mnt echo -e "2006\n2006" | passwd
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git
 arch-chroot /mnt sed -i 'windowsagent ALL=(ALL)' /etc/sudoers
 # Run a script inside a chroot environment
