@@ -42,8 +42,8 @@ cd /home/windowsagent/
 
 wget https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/configs.zip
 unzip configs.zip
-pacman -S --noconfirm --needed xfce4 xfce4-goodies sddm xorg
-systemctl enable sddm.service
+pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
+systemctl enable lightdm
 
 exit # to leave the chroot
 EOF
