@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo Insert the host name, please.
+read HOSTNAME
+
 mkdir /mnt/boot
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
 pacman -Sy
@@ -17,8 +20,6 @@ arch-chroot /mnt pacman -Syyu
 arch-chroot /mnt pacman -S --noconfirm grub os-prober efibootmgr nano
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-echo Insert the host name, please.
-read HOSTNAME
 echo Welcome to the world of Arch linux, $HOSTNAME!
 echo $HOSTNAME > /mnt/etc/hostname
 arch-chroot /mnt pacman -S --noconfirm --needed networkmanager curl
