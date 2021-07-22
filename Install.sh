@@ -25,8 +25,14 @@ arch-chroot /mnt pacman -S --noconfirm --needed networkmanager curl
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
 arch-chroot /mnt useradd -m windowsagent
-arch-chroot /mnt echo -en "2006\n2006" | passwd windowsagent
-arch-chroot /mnt echo -en "2006\n2006" | passwd root
+    cat <<EOT > /mnt/home/windowsagent/user.sh
+echo -en "2006\n2006" | passwd windowsagent
+echo -en "2006\n2006" | passwd root
+EOT
+arch-chroot /mnt chmod +x /mnt/home/windowsagent/user.sh
+arch-chroot /mnt ./mnt/home/windowsagent/user.sh
+rm -rf /mnt/home/windowsagent/user.sh
+
 mkdir /mnt/home/windowsagent
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git curl zip unzip wget
 arch-chroot /mnt systemctl enable dhcpcd
