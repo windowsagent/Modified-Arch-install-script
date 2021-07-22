@@ -1,6 +1,8 @@
 #!/bin/bash
 
 mkdir /mnt/boot
+curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
+pacman -Syyu
 timedatectl set-ntp true
 pacstrap /mnt base base-devel
 pacstrap /mnt linux linux-firmware
@@ -10,6 +12,8 @@ arch-chroot /mnt hwclock --systohc
 sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
 sed -i "s/#es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/" /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
+arch-chroot /mnt curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
+arch-chroot /mnt pacman -Syyu
 arch-chroot /mnt pacman -S --noconfirm grub os-prober efibootmgr nano
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
