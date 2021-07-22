@@ -24,45 +24,19 @@ arch-chroot /mnt useradd -m windowsagent
 arch-chroot /mnt echo -en "2006\n2006" | passwd windowsagent
 arch-chroot /mnt echo -en "2006\n2006" | passwd root
 mkdir /mnt/home/windowsagent
-arch-chroot /mnt pacman -S --noconfirm --needed sudo git
-
-# Installing desktop environment
-arch-chroot /mnt pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
-arch-chroot /mnt systemctl enable lightdm
+arch-chroot /mnt pacman -S --noconfirm --needed sudo git curl zip unzip wget
+arch-chroot /mnt systemctl enable dhcpcd
 
 # Sudoers
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
-# Run a script inside a chroot environment
+# Drop post installation script on user's home directory
+curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /home/windowsagent/runme.sh
 
-
-cat <<EOF > /mnt/root/post.sh
-pacman -S --noconfirm zip unzip wget curl
-git clone https://aur.archlinux.org/yay.git /home/windowsagent/yay
-chmod 777 /home/windowsagent/yay/
-cd /home/windowsagent/yay/
-echo Run makepkg -si > /home/windowsagent/Important.txt
-cd /home/windowsagent/
-wget https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/configs.zip
-unzip configs.zip
-
-# 07/20/2021 -- Implemented new "experimental" patches
-# I wanna kill myself, this is hard!
-
-
-
-exit # to leave the chroot
-EOF
-arch-chroot /mnt chmod +x /root/post.sh
-arch-chroot /mnt /root/post.sh
-
-
-# Exit out of the chroot enviroment
 echo " "
 echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
 echo " "
 echo "You can now proceed to reboot your system :3"
-echo "*computer* Huh, this was a whole journey!"
-echo "Do not forget to read important.txt, in your user home directory, future Knox!"
+echo "Do not forget to run the file on your home directory, in your user home directory, future Knox!"
 echo " "
 # This code is a mess, I know.
