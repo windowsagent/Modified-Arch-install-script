@@ -17,7 +17,3 @@ sudo unzip configs.zip
 
 # Install alsa and pavucontrol
 sudo pacman -S --noconfirm --needed pulseaudio-alsa pavucontrol
-
-# Install black arch repository and basic tools
-sudo wget -O - https://blackarch.org/strap.sh | sudo bash
-sudo pacman -Syy --noconfirm --needed blackarch-webapp blackarch-scanner
