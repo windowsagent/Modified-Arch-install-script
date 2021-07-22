@@ -42,7 +42,8 @@ arch-chroot /mnt systemctl enable dhcpcd
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
 # Drop post installation script on user's home directory
-curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /home/windowsagent/runme.sh
+curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /mnt/home/windowsagent/runme.sh
+chmod +x /mnt/home/windowsagent/runme.sh
 
 echo " "
 echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
