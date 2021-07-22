@@ -2,7 +2,7 @@
 
 mkdir /mnt/boot
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
-pacman -Syyu
+pacman -Sy
 timedatectl set-ntp true
 pacstrap /mnt base base-devel
 pacstrap /mnt linux linux-firmware
