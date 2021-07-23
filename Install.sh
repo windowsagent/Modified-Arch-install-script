@@ -28,6 +28,7 @@ arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
 arch-chroot /mnt useradd -m windowsagent
     cat <<EOT > /mnt/home/windowsagent/user.sh
+pacman -S pacman-contrib
 echo -en "2006\n2006" | passwd windowsagent
 echo -en "2006\n2006" | passwd root
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
