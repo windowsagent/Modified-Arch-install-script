@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # Installing desktop environment
-sudo pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm xorg-server xfce4-whiskermenu-plugin
-sudo systemctl enable lightdm
 sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit-theme-aether/g" /etc/lightdm/lightdm.conf
 
 # Installing yay
