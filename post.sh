@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Installing desktop environment
-sudo pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm lightdm-webkit2-greeter xorg 
+sudo pacman -S --noconfirm --needed xfce4 xfce4-goodies lightdm xorg-server
 sudo systemctl enable lightdm
-sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit2-greeter/g" /etc/lightdm/lightdm.conf
+sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit-theme-aether/g" /etc/lightdm/lightdm.conf
 
 # Installing yay
 git clone https://aur.archlinux.org/yay.git /home/windowsagent/yay
@@ -12,9 +12,14 @@ cd /home/windowsagent/yay/
 makepkg -si
 cd /home/windowsagent/
 
+#Install greeter
+
+yay -Sy lightdm-webkit-theme-aether
+
 # Update DE config, theme and icons
-wget https://download1082.mediafire.com/ij7wn7kg0qwg/br4thdqnjcb2494/configs.zip -P /home/windowsagent/
+wget https://github.com/windowsagent/Modified-Arch-install-script/raw/master/configs.zip -P /home/windowsagent/
 sudo unzip configs.zip
+
 
 # Install alsa and pavucontrol
 sudo pacman -S --noconfirm --needed pulseaudio-alsa pavucontrol
