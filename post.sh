@@ -20,4 +20,4 @@ sudo unzip configs.zip
 
 
 # Install alsa and pavucontrol
-sudo pacman -S --noconfirm --needed pulseaudio-alsa pavucontrol
+sudo pacman -S --noconfirm --needed pulseaudio-alsa pavucontrol alsa-utils
