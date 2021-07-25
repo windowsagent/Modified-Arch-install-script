@@ -3,6 +3,9 @@
 echo Insert the host name, please.
 read HOSTNAME
 
+echo Are you running a Vmware Workstation VM? If you are, write y. If not, write n.
+read VM
+
 mkdir /mnt/boot
 pacman -Sy --noconfirm pacman-contrib
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
@@ -55,6 +58,15 @@ chmod +x /mnt/home/windowsagent/runme.sh
 # Temporary? Fix for xfce not starting up
 arch-chroot /mnt xfconf-query -c xfwm4 -p /general/vblank_mode -s off
 # I honestly have no idea what is vblank_mode, I trust my life into stackoverflow
+
+# Install open-vm-tools if it is a virtual machine on workstation
+
+if [ $VM = y ]
+then
+    echo Installing open-vm-tools
+    arch-chroot /mnt pacman -S --noconfirm open-vm-tools
+    arch-chroot /mnt systemctl enable vmtoolsd
+fi
 
 echo " "
 echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
