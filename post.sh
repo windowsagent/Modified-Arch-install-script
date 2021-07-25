@@ -30,3 +30,13 @@ xfconf-query -c xfwm4 -p /general/vblank_mode -s off
 sudo pacman -S qt5-base qt5-svg qt5-declarative qt5-quickcontrols
 wget https://github.com/windowsagent/Modified-Arch-install-script/raw/master/ocs-url-3.1.0-1-x86_64.pkg.tar.xz -P /home/windowsagent
 sudo pacman -U /home/windowsagent/ocs-url-3.1.0-1-x86_64.pkg.tar.xz
+
+# Install plymouth
+yay -S --noconfirm plymouth
+
+# Install xarchiver
+sudo pacman -S --noconfirm xarchiver thunar-archive-plugin
+
+# Install list of useful and important apps
+
+sudo pacman -S --noconfirm vlc ffmpeg mpv blender firefox
