@@ -52,6 +52,10 @@ arch-chroot /mnt systemctl enable lightdm
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /mnt/home/windowsagent/runme.sh
 chmod +x /mnt/home/windowsagent/runme.sh
 
+# Temporary? Fix for xfce not starting up
+xfconf-query -c xfwm4 -p /general/vblank_mode -s off
+# I honestly have no idea what is vblank_mode, I trust my life into stackoverflow
+
 echo " "
 echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
 echo " "
