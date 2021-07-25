@@ -45,7 +45,7 @@ arch-chroot /mnt systemctl enable dhcpcd
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
 # Install desktop environment
-arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies lightdm xorg xfce4-whiskermenu-plugin lightdm-gtk-greeter
+arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies lightdm xorg xfce4-whiskermenu-plugin lightdm-gtk-greeter xorg-server
 arch-chroot /mnt systemctl enable lightdm
 
 # Drop post installation script on user's home directory
