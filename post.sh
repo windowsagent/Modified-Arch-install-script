@@ -29,3 +29,5 @@ sudo unzip share.zip
 
 sudo cp -R /usr/share/themes/IndigoMagic /home/windowsagent/.themes/
 sudo cp -R /usr/share/icons/sgi-elementary-xfce /home/windowsagent/.icons/
+
+xfconf-query -c xfwm4 -p /general/vblank_mode -s off
