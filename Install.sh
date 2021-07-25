@@ -33,9 +33,9 @@ echo -en "2006\n2006" | passwd windowsagent
 echo -en "2006\n2006" | passwd root
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 EOT
-arch-chroot /mnt chmod +x /home/windowsagent/user.sh
-arch-chroot /mnt ./home/windowsagent/user.sh
-rm -rf /mnt/home/windowsagent/user.sh
+arch-chroot /mnt chmod +x /home/windowsagent/temp.sh
+arch-chroot /mnt ./home/windowsagent/temp.sh
+rm -rf /mnt/home/windowsagent/temp.sh
 
 mkdir /mnt/home/windowsagent
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git curl zip unzip wget
@@ -53,7 +53,7 @@ curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script
 chmod +x /mnt/home/windowsagent/runme.sh
 
 # Temporary? Fix for xfce not starting up
-xfconf-query -c xfwm4 -p /general/vblank_mode -s off
+arch-chroot /mnt xfconf-query -c xfwm4 -p /general/vblank_mode -s off
 # I honestly have no idea what is vblank_mode, I trust my life into stackoverflow
 
 echo " "
