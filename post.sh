@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Installing desktop environment
-sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-webkit-theme-aether/g" /etc/lightdm/lightdm.conf
+sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/g" /etc/lightdm/lightdm.conf
 
 # Installing yay
 git clone https://aur.archlinux.org/yay.git /home/windowsagent/yay
@@ -12,7 +12,7 @@ cd /home/windowsagent/
 
 #Install greeter
 
-yay -Sy lightdm-webkit-theme-aether
+yay -Sy lightdm-slick-greeter
 
 # Update DE config, theme and icons
 wget https://github.com/windowsagent/Modified-Arch-install-script/raw/master/configs.zip -P /home/windowsagent/
