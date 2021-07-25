@@ -27,7 +27,7 @@ arch-chroot /mnt pacman -S --noconfirm --needed networkmanager curl
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
 arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash windowsagent
-    cat <<EOT > /mnt/home/windowsagent/user.sh
+    cat <<EOT > /mnt/home/windowsagent/temp.sh
 pacman -S --noconfirm pacman-contrib
 echo -en "2006\n2006" | passwd windowsagent
 echo -en "2006\n2006" | passwd root
