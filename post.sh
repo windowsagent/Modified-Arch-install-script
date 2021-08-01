@@ -40,3 +40,9 @@ sudo pacman -S --noconfirm xarchiver thunar-archive-plugin
 # Install list of useful and important apps
 
 sudo pacman -S --noconfirm vlc ffmpeg mpv blender firefox
+
+# Reboot
+
+sudo reboot
+
+# wow. This code is filled with comments! I sure do look like a beginner...
