@@ -6,6 +6,10 @@ read HOSTNAME
 echo Are you running a Vmware Workstation VM? If you are, write y. If not, write n.
 read VM
 
+
+echo Do you want to install XFCE mate? If you want, write y. If not, write n.
+read XFCE
+
 mkdir /mnt/boot
 pacman -Sy --noconfirm pacman-contrib
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
@@ -48,7 +52,7 @@ arch-chroot /mnt systemctl enable dhcpcd
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
 # Install desktop environment
-arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies lightdm xorg xfce4-whiskermenu-plugin lightdm-gtk-greeter xorg-server
+arch-chroot /mnt pacman -S --noconfirm lightdm xorg lightdm-gtk-greeter xorg-server
 arch-chroot /mnt systemctl enable lightdm
 
 # Drop post installation script on user's home directory
@@ -66,6 +70,12 @@ then
     echo Installing open-vm-tools
     arch-chroot /mnt pacman -S --noconfirm open-vm-tools
     arch-chroot /mnt systemctl enable vmtoolsd
+fi
+
+if [ $XFCE = y ]
+then
+    echo Installing XFCE
+    arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies xfce4-whiskermenu-plugin
 fi
 
 echo " "
