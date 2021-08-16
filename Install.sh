@@ -4,8 +4,10 @@ echo Insert the host name, please.
 read HOSTNAME
 
 echo Are you running a Vmware Workstation VM? If you are, write y. If not, write n.
-read VM
+read workstation
 
+echo Are you running on a Virtualbox VM mate? If you are, write y. If not, write n.
+read virtualbox
 
 echo Do you want to install XFCE mate? If you want, write y. If not, write n.
 read XFCE
@@ -65,7 +67,7 @@ arch-chroot /mnt xfconf-query -c xfwm4 -p /general/vblank_mode -s off
 
 # Install open-vm-tools if it is a virtual machine on workstation
 
-if [ $VM = y ]
+if [ $virtualbox = y ]
 then
     echo Installing open-vm-tools
     arch-chroot /mnt pacman -S --noconfirm open-vm-tools
@@ -76,6 +78,12 @@ if [ $XFCE = y ]
 then
     echo Installing XFCE
     arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies xfce4-whiskermenu-plugin
+fi
+
+if [ $virtualbox = y ]
+then
+    echo Installing virtualbox-guest-utils
+    arch-chroot /mnt pacman -S --noconfirm virtualbox-guest-utils
 fi
 
 echo " "
