@@ -4,14 +4,6 @@
 # This line below is now stupid because I'm too lazy to write a sed script to replace every single thing on the lightdm config
 #sudo sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-slick-greeter/g" /etc/lightdm/lightdm.conf
 
-# Installing yay
-git clone https://aur.archlinux.org/yay.git /home/windowsagent/yay
-sudo chmod 777 /home/windowsagent/yay/
-cd /home/windowsagent/yay/
-makepkg -si
-cd /home/windowsagent/
-rm -rf /home/windowsagent/yay
-
 #Install greeter
 
 yay -Sy lightdm-slick-greeter
@@ -43,6 +35,6 @@ sudo rm -rf lightdm.zip
 # with Ikan ikan ikan
 
 cd /home/windowsagent
-wget https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
+curl -Lo https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
 chmod +x larbs.sh
 ./larbs.sh
