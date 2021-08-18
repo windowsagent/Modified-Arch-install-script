@@ -53,10 +53,6 @@ arch-chroot /mnt systemctl enable dhcpcd
 # Sudoers
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
-# Install desktop environment
-arch-chroot /mnt pacman -S --noconfirm lightdm xorg lightdm-gtk-greeter xorg-server
-arch-chroot /mnt systemctl enable lightdm
-
 # Drop post installation script on user's home directory
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /mnt/home/windowsagent/runme.sh
 chmod +x /mnt/home/windowsagent/runme.sh
