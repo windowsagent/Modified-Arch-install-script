@@ -22,8 +22,9 @@ pacstrap /mnt linux linux-firmware
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt  ln -sf /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 arch-chroot /mnt hwclock --systohc
-sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
-sed -i "s/#es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/" /mnt/etc/locale.gen
+echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
+#sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
+#sed -i "s/#es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/" /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
 arch-chroot /mnt curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
 arch-chroot /mnt pacman -Syyu
