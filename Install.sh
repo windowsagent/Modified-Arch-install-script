@@ -23,8 +23,8 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt  ln -sf /usr/share/zoneinfo/America/Mexico_City /etc/localtime
 arch-chroot /mnt hwclock --systohc
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
-#sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
-#sed -i "s/#es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/" /mnt/etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /mnt/etc/locale.gen
+sed -i "s/#es_MX.UTF-8 UTF-8/es_MX.UTF-8 UTF-8/" /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
 arch-chroot /mnt curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/mirrorlist > /etc/pacman.d/mirrorlist
 arch-chroot /mnt pacman -Syyu
@@ -62,9 +62,8 @@ arch-chroot /mnt systemctl enable lightdm
 curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /mnt/home/windowsagent/runme.sh
 chmod +x /mnt/home/windowsagent/runme.sh
 
-# Temporary? Fix for xfce not starting up
-arch-chroot /mnt xfconf-query -c xfwm4 -p /general/vblank_mode -s off
-# I honestly have no idea what is vblank_mode, I trust my life into stackoverflow
+# Properly setting up locale from C (default) to en_US.utf-8
+arch-chroot /mnt locale-ctl set-locale LANG=en_US.UTF-8
 
 # Install open-vm-tools if it is a virtual machine on workstation
 
