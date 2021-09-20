@@ -59,8 +59,8 @@ arch-chroot /mnt pacman -S --noconfirm lightdm xorg lightdm-gtk-greeter xorg-ser
 arch-chroot /mnt systemctl enable lightdm
 
 # Drop post installation script on user's home directory
-curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/post.sh > /mnt/home/windowsagent/runme.sh
-chmod +x /mnt/home/windowsagent/runme.sh
+curl -LO https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
+chmod +x larbs.sh
 
 # Properly setting up locale from C (default) to en_US.utf-8
 arch-chroot /mnt locale-ctl set-locale LANG=en_US.UTF-8
@@ -87,9 +87,9 @@ then
 fi
 
 echo " "
-echo -e "${GREEN}Arch Linux installed successfully" ' ! ' "${NC}"
+echo -e "${GREEN}Arch Linux has been installed successfully owo" ' ! ' "${NC}"
 echo " "
-echo "You can now proceed to reboot your system :3"
+echo "You can now proceed to reboot your system, and tell your friends about it."
 echo "Do not forget to run the file on your home directory, in your user home directory, future Knox!"
 echo " "
 # This code is a mess, I know.
