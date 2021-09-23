@@ -3,14 +3,17 @@
 echo Insert the host name, please.
 read HOSTNAME
 
+echo Insert the root password
+read PASS
+
 echo Are you running a Vmware Workstation VM? If you are, write y. If not, write n.
 read workstation
 
 echo Are you running on a Virtualbox VM mate? If you are, write y. If not, write n.
 read virtualbox
 
-echo Do you want to install XFCE mate? If you want, write y. If not, write n.
-read XFCE
+#echo Do you want to install XFCE mate? If you want, write y. If not, write n.
+#read XFCE
 
 mkdir /mnt/boot
 pacman -Sy --noconfirm pacman-contrib
@@ -37,26 +40,24 @@ arch-chroot /mnt pacman -S --noconfirm --needed networkmanager curl
 arch-chroot /mnt systemctl enable NetworkManager.service
 arch-chroot /mnt pacman -S --noconfirm dhcpcd
 arch-chroot /mnt useradd -m -G wheel,storage,optical -s /bin/bash windowsagent
-    cat <<EOT > /mnt/home/windowsagent/temp.sh
+    cat <<EOT > /mnt/tmp/temp.sh
 pacman -S --noconfirm pacman-contrib
-echo -en "2006\n2006" | passwd windowsagent
-echo -en "2006\n2006" | passwd root
+echo -en "$PASS\n$PASS" | passwd root
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 EOT
-arch-chroot /mnt chmod +x /home/windowsagent/temp.sh
-arch-chroot /mnt ./home/windowsagent/temp.sh
-rm -rf /mnt/home/windowsagent/temp.sh
+arch-chroot /mnt chmod +x /mnt/tmp/temp.sh
+arch-chroot /mnt bash /mnt/tmp/temp.sh
 
 mkdir /mnt/home/windowsagent
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git curl zip unzip wget
 arch-chroot /mnt systemctl enable dhcpcd
 
 # Sudoers
-curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
+# curl https://raw.githubusercontent.com/windowsagent/Modified-Arch-install-script/master/sudoers > /mnt/etc/sudoers
 
 # Install desktop environment
-arch-chroot /mnt pacman -S --noconfirm lightdm xorg lightdm-gtk-greeter xorg-server
-arch-chroot /mnt systemctl enable lightdm
+# arch-chroot /mnt pacman -S --noconfirm lightdm xorg lightdm-gtk-greeter xorg-server
+# arch-chroot /mnt systemctl enable lightdm
 
 # Drop post installation script on user's home directory
 curl -LO https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
@@ -74,11 +75,11 @@ then
     arch-chroot /mnt systemctl enable vmtoolsd
 fi
 
-if [ $XFCE = y ]
-then
-    echo Installing XFCE
-    arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies xfce4-whiskermenu-plugin
-fi
+#if [ $XFCE = y ]
+#then
+#    echo Installing XFCE
+#    arch-chroot /mnt pacman -S --noconfirm xfce4 xfce4-goodies xfce4-whiskermenu-plugin
+#fi
 
 if [ $virtualbox = y ]
 then
@@ -87,7 +88,7 @@ then
 fi
 
 echo " "
-echo -e "${GREEN}Arch Linux has been installed successfully owo" ' ! ' "${NC}"
+echo  "Arch Linux has been installed successfully owo" ' ! ' "${NC}"
 echo " "
 echo "You can now proceed to reboot your system, and tell your friends about it."
 echo "Do not forget to run the file on your home directory, in your user home directory, future Knox!"
