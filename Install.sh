@@ -45,8 +45,8 @@ pacman -S --noconfirm pacman-contrib
 echo -en "$PASS\n$PASS" | passwd root
 curl -s "https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 5 -
 EOT
-arch-chroot /mnt chmod +x /mnt/tmp/temp.sh
-arch-chroot /mnt bash /mnt/tmp/temp.sh
+arch-chroot /mnt chmod +x /tmp/temp.sh
+arch-chroot /mnt bash /tmp/temp.sh
 
 mkdir /mnt/home/windowsagent
 arch-chroot /mnt pacman -S --noconfirm --needed sudo git curl zip unzip wget
@@ -60,8 +60,9 @@ arch-chroot /mnt systemctl enable dhcpcd
 # arch-chroot /mnt systemctl enable lightdm
 
 # Drop post installation script on user's home directory
-curl -LO https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
-chmod +x larbs.sh
+cd /mnt/root
+curl -Lo /mnt/root/larbs.sh https://raw.githubusercontent.com/windowsagent/LARBS/master/larbs.sh
+chmod +x /mnt/root/larbs.sh
 
 # Properly setting up locale from C (default) to en_US.utf-8
 arch-chroot /mnt locale-ctl set-locale LANG=en_US.UTF-8
